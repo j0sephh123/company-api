@@ -1,6 +1,5 @@
 [Refactor]
 - import with absolute path
-- tsyringe
 
 [Core]
 - Delete a company
@@ -9,3 +8,4 @@
 
 [Ideas]
 - Control the code from a third party. Do some configurations for fun
+- use tsyringe for DI
