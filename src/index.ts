@@ -2,6 +2,8 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import DatabaseSingleton from "./db.js";
 import { CompanySeeder } from "./seeders/CompanySeeder.js";
+import { SqlQueryBuilder } from "./utils/SqlQueryBuilder.js";
+import { MESSAGES } from "./constants/messages.js";
 import "dotenv/config";
 
 if (!process.env.PORT) {
@@ -10,19 +12,20 @@ if (!process.env.PORT) {
 
 export const app = new Hono();
 const db = DatabaseSingleton.getInstance();
+const queryBuilder = SqlQueryBuilder.getInstance();
 
 app.get("/", (c) => {
-  return c.text("Hello Hono!");
+  return c.text(MESSAGES.HELLO);
 });
 
 app.get("/companies", (c) => {
-  const companies = db.getDb().prepare("SELECT * FROM companies").all();
+  const companies = queryBuilder.getAllCompanies(db.getDb());
   return c.json(companies);
 });
 
-app.post("/seed", (c) => {
-  new CompanySeeder().seed();
-  return c.json({ message: "Companies seeded successfully" });
+app.post("/seed", async (c) => {
+  await new CompanySeeder().seed();
+  return c.json({ message: MESSAGES.SEED_SUCCESS });
 });
 
 if (process.env.NODE_ENV !== "test") {

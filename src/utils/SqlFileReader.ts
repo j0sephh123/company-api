@@ -17,6 +17,6 @@ export class SqlFileReader {
   }
 
   public readSqlFile(filename: string): string {
-    return readFileSync(join(__dirname, "..", "sql", filename), "utf-8");
+    return readFileSync(join(__dirname, "..", "sql", `${filename}.sql`), "utf-8");
   }
 }

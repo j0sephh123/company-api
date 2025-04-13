@@ -1,26 +1,33 @@
 import { testClient } from "hono/testing";
 import { app } from "../../index.js";
+import { MESSAGES } from "../../constants/messages.js";
 
 describe("App", () => {
   const client: any = testClient(app);
 
-  test("should return hello message", async () => {
-    const res = await client[""].$get();
-    expect(res.status).toBe(200);
-    expect(await res.text()).toBe("Hello Hono!");
+  describe("GET /", () => {
+    test("should return hello message", async () => {
+      const res = await client[""].$get();
+      expect(res.status).toBe(200);
+      expect(await res.text()).toBe(MESSAGES.HELLO);
+    });
   });
 
-  test("should return companies", async () => {
-    const res = await client.companies.$get();
-    expect(res.status).toBe(200);
-    const data = await res.json();
-    expect(Array.isArray(data)).toBe(true);
+  describe("GET /companies", () => {
+    test("should return companies", async () => {
+      const res = await client.companies.$get();
+      expect(res.status).toBe(200);
+      const data = await res.json();
+      expect(Array.isArray(data)).toBe(true);
+    });
   });
 
-  test("should seed companies", async () => {
-    const res = await client.seed.$post();
-    expect(res.status).toBe(200);
-    const data = await res.json();
-    expect(data.message).toBe("Companies seeded successfully");
+  describe("POST /seed", () => {
+    test("should seed companies", async () => {
+      const res = await client.seed.$post();
+      expect(res.status).toBe(200);
+      const data = await res.json();
+      expect(data.message).toBe(MESSAGES.SEED_SUCCESS);
+    });
   });
 });

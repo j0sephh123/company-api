@@ -1,15 +1,15 @@
 import betterSqlite3 from "better-sqlite3";
 import type { Database } from "better-sqlite3";
-import { SqlFileReader } from "./utils/SqlFileReader.js";
+import { SqlQueryBuilder } from "./utils/SqlQueryBuilder.js";
 
 class DatabaseSingleton {
   private static instance: DatabaseSingleton;
   private db: Database;
-  private sqlReader: SqlFileReader;
+  private queryBuilder: SqlQueryBuilder;
 
   private constructor() {
     this.db = betterSqlite3("company.db");
-    this.sqlReader = SqlFileReader.getInstance();
+    this.queryBuilder = SqlQueryBuilder.getInstance();
     this.initializeDatabase();
   }
 
@@ -21,8 +21,7 @@ class DatabaseSingleton {
   }
 
   private initializeDatabase(): void {
-    const sql = this.sqlReader.readSqlFile("company.sql");
-    this.db.exec(sql);
+    this.queryBuilder.initializeDatabase(this.db);
   }
 
   public getDb(): Database {
