@@ -1,13 +1,13 @@
 import { testClient } from "hono/testing";
-import { app } from "../../index.js";
+import app from "../../index.js";
 import { MESSAGES } from "../../constants/messages.js";
 
 describe("App", () => {
-  const client: any = testClient(app);
+  const client = testClient(app);
 
   describe("GET /", () => {
     test("should return hello message", async () => {
-      const res = await client[""].$get();
+      const res = await client.index.$get();
       expect(res.status).toBe(200);
       expect(await res.text()).toBe(MESSAGES.HELLO);
     });

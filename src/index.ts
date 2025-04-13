@@ -9,22 +9,20 @@ if (!process.env.PORT) {
   throw new Error("PORT environment variable is not defined");
 }
 
-export const app = new Hono();
 const companyRepo = createCompanyRepository();
 
-app.get("/", (c) => {
-  return c.text(MESSAGES.HELLO);
-});
-
-app.get("/companies", (c) => {
-  const companies = companyRepo.getAllCompanies();
-  return c.json(companies);
-});
-
-app.post("/seed", async (c) => {
-  new CompanySeeder().seed();
-  return c.json({ message: MESSAGES.SEED_SUCCESS });
-});
+const app = new Hono()
+  .get("/", (c) => {
+    return c.text(MESSAGES.HELLO);
+  })
+  .get("/companies", (c) => {
+    const companies = companyRepo.getAllCompanies();
+    return c.json(companies);
+  })
+  .post("/seed", async (c) => {
+    new CompanySeeder().seed();
+    return c.json({ message: MESSAGES.SEED_SUCCESS });
+  });
 
 if (process.env.NODE_ENV !== "test") {
   const port = parseInt(process.env.PORT);
@@ -38,3 +36,5 @@ if (process.env.NODE_ENV !== "test") {
     }
   );
 }
+
+export default app;
