@@ -3,10 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest",
-    "test:watch": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --watch",
-    "test:unit": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest src/__tests__/unit",
-    "test:integration": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest src/__tests__/integration"
+    "test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "dependencies": {
     "@hono/node-server": "^1.14.1",
