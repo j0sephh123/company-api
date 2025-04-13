@@ -4,7 +4,7 @@ import { CompanySeeder } from "./data/seeders/CompanySeeder.js";
 import { MESSAGES } from "./constants/messages.js";
 import "dotenv/config";
 import { createCompanyRepository } from "./domain/company/repositories/companyFactory.js";
-
+import { Company } from "./domain/company/repositories/Company.js";
 if (!process.env.PORT) {
   throw new Error("PORT environment variable is not defined");
 }

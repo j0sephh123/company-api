@@ -1,5 +1,6 @@
 import type { Database } from "better-sqlite3";
 import { SqlReader } from "../../../infrastructure/readers/SqlReader.js";
+import { Company } from "./Company.js";
 
 export default class CompanyRepository {
   constructor(private db: Database, private sqlReader: SqlReader) {
@@ -11,17 +12,17 @@ export default class CompanyRepository {
     this.db.exec(sql);
   }
 
-  public getAllCompanies() {
+  public getAllCompanies(): Company[] {
     const sql = this.sqlReader.readSqlFile("getAllCompanies");
-    return this.db.prepare(sql).all();
+    return this.db.prepare(sql).all() as Company[];
   }
 
-  public deleteAllCompanies() {
+  public deleteAllCompanies(): { changes: number } {
     const sql = this.sqlReader.readSqlFile("deleteAllCompanies");
     return this.db.prepare(sql).run();
   }
 
-  public insertCompany(name: string) {
+  public insertCompany(name: string): { changes: number } {
     const sql = this.sqlReader.readSqlFile("insertCompany");
     return this.db.prepare(sql).run(name);
   }
