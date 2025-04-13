@@ -2,8 +2,13 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import DatabaseSingleton from "./db.js";
 import { CompanySeeder } from "./seeders/CompanySeeder.js";
+import "dotenv/config";
 
-const app = new Hono();
+if (!process.env.PORT) {
+  throw new Error("PORT environment variable is not defined");
+}
+
+export const app = new Hono();
 const db = DatabaseSingleton.getInstance();
 
 app.get("/", (c) => {
@@ -20,12 +25,15 @@ app.post("/seed", (c) => {
   return c.json({ message: "Companies seeded successfully" });
 });
 
-serve(
-  {
-    fetch: app.fetch,
-    port: 3000,
-  },
-  (info) => {
-    console.log(`Server is running on http://localhost:${info.port}`);
-  }
-);
+if (process.env.NODE_ENV !== "test") {
+  const port = parseInt(process.env.PORT);
+  serve(
+    {
+      fetch: app.fetch,
+      port,
+    },
+    (info) => {
+      console.log(`Server is running on http://localhost:${info.port}`);
+    }
+  );
+}

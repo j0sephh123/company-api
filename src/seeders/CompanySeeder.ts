@@ -1,11 +1,13 @@
 import DatabaseSingleton from "../db.js";
-import { companies } from "../data/companies.js";
+import { Mocker } from "../mockers/Mocker.js";
 
 export class CompanySeeder {
   private db: DatabaseSingleton;
+  private mocker: Mocker;
 
   constructor() {
     this.db = DatabaseSingleton.getInstance();
+    this.mocker = new Mocker();
   }
 
   public seed(): void {
@@ -19,6 +21,6 @@ export class CompanySeeder {
       }
     });
 
-    insert(companies);
+    insert(this.mocker.getCompanies());
   }
 }
