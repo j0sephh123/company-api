@@ -27,6 +27,11 @@ export default class CompanyRepository {
     return this.db.prepare(sql).run(name);
   }
 
+  public updateCompanyName(id: number, name: string): { changes: number } {
+    const sql = this.sqlReader.readSqlFile("updateCompanyName");
+    return this.db.prepare(sql).run(name, id);
+  }
+
   public transaction<T>(fn: () => T): T {
     return this.db.transaction(fn)();
   }
