@@ -1,3 +1,7 @@
+[Refactor]
+- import with absolute path
+- tsyringe
+
 [Core]
 - Delete a company
 - Rename a company

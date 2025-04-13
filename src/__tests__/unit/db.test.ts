@@ -1,5 +1,5 @@
-import { CompanySeeder } from "../../seeders/CompanySeeder.js";
-import { Mocker } from "../../mockers/Mocker.js";
+import { Mocker } from "../../data/mockers/Mocker.js";
+import { CompanySeeder } from "../../data/seeders/CompanySeeder.js";
 
 describe("CompanySeeder", () => {
   test("should seed companies", async () => {
@@ -8,10 +8,7 @@ describe("CompanySeeder", () => {
     const mockCompanies = mocker.getCompanies();
 
     seeder.seed();
-    const companies = seeder["db"]
-      .getDb()
-      .prepare("SELECT * FROM companies")
-      .all();
+    const companies = seeder.getAllCompanies();
     expect(companies).toHaveLength(mockCompanies.length);
   });
 });

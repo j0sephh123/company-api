@@ -6,8 +6,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export class SqlFileReader {
   private static instance: SqlFileReader;
+  private basePath: string;
 
-  private constructor() {}
+  public constructor() {
+    this.basePath = join(__dirname, "..", "sql", "company");
+  }
 
   public static getInstance(): SqlFileReader {
     if (!SqlFileReader.instance) {
@@ -17,6 +20,6 @@ export class SqlFileReader {
   }
 
   public readSqlFile(filename: string): string {
-    return readFileSync(join(__dirname, "..", "sql", `${filename}.sql`), "utf-8");
+    return readFileSync(join(this.basePath, `${filename}.sql`), "utf-8");
   }
 }
